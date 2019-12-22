@@ -9,7 +9,7 @@ class Counter extends Component {
   //   this.handleIncrement = this.handleIncrement.bind(this);
   // }
   state = {
-    count: this.props.value,
+    // count: this.props.value,
     imageURL: "https://picsum.photos/200",
     tags: ["tag1", "tag2", "tag3"]
   };
@@ -27,13 +27,16 @@ class Counter extends Component {
       </ul>
     );
   }
-  handleIncrement = () => {
-    console.log();
-    console.log("Increment Clicked", this.state.count);
-    // React cant identify the button click as the state is predefined
-    // so we need to upate te state in order to identify the button changes.
-    this.setState({ count: this.state.count + 1 });
-  };
+
+  //State is used only for local component ,, so we need to use props for component from passing values to oter component.
+  // Single source of trut refer video :1:50:00 sec
+  // handleIncrement = () => {
+  //   console.log();
+  //   console.log("Increment Clicked", this.state.count);
+  //   // React cant identify the button click as the state is predefined
+  //   // so we need to upate te state in order to identify the button changes.
+  //   this.setState({ count: this.state.count + 1 });
+  // };
   // dohandleIncrement = () =>  {
   //   this.handleIncrement({ id: 1 });
   // };     ..........................METHOD CAN BE WRITTEN AS BELOW ONCLICK
@@ -42,11 +45,12 @@ class Counter extends Component {
 
     return (
       <div>
+        {/* {this.getBadgeClasses()} */}
         {/* <img src={this.state.imageURL} alt="" /> */}
         {this.props.children}
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement()}
+          onClick={() => this.props.onIncrement(this.props.value)}
           className="btn btn-secondary btn- sm"
         >
           Increment
@@ -66,12 +70,12 @@ class Counter extends Component {
   }
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
+    classes += this.props.value === 0 ? "warning" : "primary";
     return classes;
   }
 
   formatCount() {
-    const { count } = this.state;
+    let count = this.props.value;
     return count === 0 ? "Zero" : count;
   }
 }
